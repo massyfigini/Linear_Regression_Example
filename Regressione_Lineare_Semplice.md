@@ -4,7 +4,6 @@ Massimiliano Figini
 
 
 
-
 ### Diamond
 
 La libreria UsingR contiene "diamond",  con i prezzi di 48 diamanti (in dollari di Singapore) e la loro grandezza (in carati).
@@ -17,10 +16,7 @@ data(diamond)
 library(ggplot2)
 ```
 
-
 ### Grafico
-
-"diamond" contiene i prezzi di 48 diamanti (in dollari di Singapore) e la loro grandezza (in carati).
 
 Codice per il grafico con la retta di regressione
 
@@ -41,8 +37,7 @@ g = g + geom_smooth(method = "lm", colour = "red")
 g
 ```
 
-![](grafico-1.png)<!-- -->
-
+![](Regressione_Lineare_Semplice_files/figure-html/grafico-1.png)<!-- -->
 
 ### Parametri
 
@@ -86,10 +81,9 @@ lm(price ~ I(carat * 10), data = diamond)$coefficient
 ##     -259.6259      372.1025
 ```
 
-
 ### Previsioni
 
-Prevediamo il prezzo di 3 diamanti da 0.15, 0.22, 0.31 e 0.40 carati:
+Prevedo il prezzo di 4 diamanti da 0.15, 0.22, 0.31 e 0.40 carati:
 
 
 ```r
@@ -114,10 +108,7 @@ coef(rl)[1] + coef(rl)[2] * xn
 ## [1]  298.5278  558.9996  893.8918 1228.7840
 ```
 
-
 ### Residui
-
-Calcoliamo i residui
 
 
 ```r
@@ -137,10 +128,9 @@ round(sum(diamond$price-(pred+e)), digits=10)
 
 La somma dei residui è zero, tutto corretto.
 
-
 ### Summary
 
-Tutti i risultati della regressione, compreso l'R^2 e i dati della t per poter fare inferenza possiamo vederli con:
+Tutti i risultati della regressione, compreso l'R^2 e i dati della t per poter fare inferenza posso vederli con:
 
 
 ```r

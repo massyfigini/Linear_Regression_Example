@@ -132,7 +132,6 @@ library(ggplot2)</code></pre>
 </div>
 <div id="grafico" class="section level3">
 <h3>Grafico</h3>
-<p>“diamond” contiene i prezzi di 48 diamanti (in dollari di Singapore) e la loro grandezza (in carati).</p>
 <p>Codice per il grafico con la retta di regressione</p>
 <pre class="r"><code># imposto il grafico
 g = ggplot(diamond, aes(x = carat, y = price))
@@ -168,7 +167,7 @@ coef(rl)</code></pre>
 </div>
 <div id="previsioni" class="section level3">
 <h3>Previsioni</h3>
-<p>Prevediamo il prezzo di 3 diamanti da 0.15, 0.22, 0.31 e 0.40 carati:</p>
+<p>Prevedo il prezzo di 4 diamanti da 0.15, 0.22, 0.31 e 0.40 carati:</p>
 <pre class="r"><code># vettore con la dimensione dei diamanti di cui stimare il prezzo
 xn &lt;- c(0.15, 0.22, 0.31, 0.40)
 
@@ -182,7 +181,6 @@ coef(rl)[1] + coef(rl)[2] * xn</code></pre>
 </div>
 <div id="residui" class="section level3">
 <h3>Residui</h3>
-<p>Calcoliamo i residui</p>
 <pre class="r"><code># memorizzo i valori attesi della regressione
 pred &lt;- predict(rl)
 
@@ -196,7 +194,7 @@ round(sum(diamond$price-(pred+e)), digits=10)</code></pre>
 </div>
 <div id="summary" class="section level3">
 <h3>Summary</h3>
-<p>Tutti i risultati della regressione, compreso l’R^2 e i dati della t per poter fare inferenza possiamo vederli con:</p>
+<p>Tutti i risultati della regressione, compreso l’R^2 e i dati della t per poter fare inferenza posso vederli con:</p>
 <pre class="r"><code>summary(rl)</code></pre>
 <pre><code>## 
 ## Call:
