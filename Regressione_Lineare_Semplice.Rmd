@@ -1,0 +1,118 @@
+---
+title: "Esempio di regressione lineare semplice"
+author: "Massimiliano Figini"
+date: "13 novembre 2016"
+output: 
+  html_document: 
+    keep_md: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(UsingR)
+data(diamond)
+library(ggplot2)
+```
+
+
+### Diamond
+
+La libreria UsingR contiene "diamond",  con i prezzi di 48 diamanti (in dollari di Singapore) e la loro grandezza (in carati).
+Importo anche ggplot2 per il grafico.
+
+```{r import}
+library(UsingR)
+data(diamond)
+library(ggplot2)
+```
+
+
+### Grafico
+
+"diamond" contiene i prezzi di 48 diamanti (in dollari di Singapore) e la loro grandezza (in carati).
+
+Codice per il grafico con la retta di regressione
+
+```{r grafico}
+# imposto il grafico
+g = ggplot(diamond, aes(x = carat, y = price))
+
+# etichetto gli assi
+g = g + xlab("Dimensione (carati)")
+g = g + ylab("Prezzo ($ Singapore)")
+
+# inserisco i dati: alpha=0.2 per dare trasparenza e vedere così le sovrapposizioni
+g = g + geom_point(size = 6, colour = "blue", alpha=0.2)
+
+# retta di regressione
+g = g + geom_smooth(method = "lm", colour = "red")
+g
+```
+
+
+### Parametri
+
+Il grafico mostra chiaramente una correlazione lineare tra le due variabili.
+Calcolo i parametri della regressione
+
+```{r regressione}
+rl <- lm(price ~ carat, data = diamond)
+coef(rl)
+```
+
+Quindi beta0 è circa -260 (sarebbe il prezzo di un diamante da zero carati, che non esiste), e beta1 è 3721: per ogni aumento di un carato ci aspettiamo che il prezzo di un diamante aumenti di 3721 dollari.
+
+Per un valore dell'intercetta più interpretabile possiamo utilizzare una funzione che trasforma beta0 nel prezzo atteso per un diamante di dimensione media. beta1 naturalmente rimane uguale:
+
+```{r media}
+lm(price ~ I(carat - mean(carat)), data = diamond)$coefficient
+```
+
+L'aumento di un decimo di carato naturalmente aumenta di un decimo il prezzo del diamante rispetto all'aumento di un carato:
+
+```{r carati}
+lm(price ~ I(carat * 10), data = diamond)$coefficient
+```
+
+
+### Previsioni
+
+Prevediamo il prezzo di 3 diamanti da 0.15, 0.22, 0.31 e 0.40 carati:
+
+```{r previsione}
+# vettore con la dimensione dei diamanti di cui stimare il prezzo
+xn <- c(0.15, 0.22, 0.31, 0.40)
+
+# previsione
+predict(rl, newdata = data.frame(carat = xn))
+
+# è equivalente a calcolarlo tramite la funzione di regressione
+coef(rl)[1] + coef(rl)[2] * xn
+```
+
+
+### Residui
+
+Calcoliamo i residui
+
+```{r residui}
+# memorizzo i valori attesi della regressione
+pred <- predict(rl)
+
+# memorizzo i residui
+e <- resid(rl)
+
+# controllo che il valore del prezzo dei diamanti sia equivalente a quello delle previsioni sommati agli errori
+round(sum(diamond$price-(pred+e)), digits=10)
+```
+
+La somma dei residui è zero, tutto corretto.
+
+
+### Summary
+
+Tutti i risultati della regressione, compreso l'R^2 e i dati della t per poter fare inferenza possiamo vederli con:
+
+```{r summary}
+summary(rl)
+```
