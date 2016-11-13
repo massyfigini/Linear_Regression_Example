@@ -41,7 +41,7 @@ g = g + geom_smooth(method = "lm", colour = "red")
 g
 ```
 
-![](Regressione_Lineare_Semplice_files/figure-html/grafico-1.png)<!-- -->
+![](grafico-1.png)<!-- -->
 
 
 ### Parametri
