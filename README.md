@@ -1,1 +1,1 @@
-# Linear_Regression_Example
+Simple and reproducible Linear regression example.
